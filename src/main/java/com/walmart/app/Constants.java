@@ -7,10 +7,6 @@ public final class Constants {
     public static final String SEATS_UNAVAILABLE_MSG = "The requested number of seats is not available.";
 }
 
-enum States {
-    AVAILABLE, HELD, RESERVED;
-}
-
 enum ReserveOrRelease {
     EXPIRED, RESERVE;
 }

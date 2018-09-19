@@ -1,29 +1,29 @@
 package com.walmart.app;
 
-import com.walmart.app.Exceptions.SessionExpiredException;
-
+import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
+import java.util.TreeMap;
 
 public class ScheduleTask extends TimerTask {
     private int seatHoldId;
+    private SeatHold seatsInfo;
     private Map<Integer,SeatHold> heldTickets;
-    private States[][] layout;
-    SeatHold seatsInfo;
-    Venue venue;
+    private Map<Integer, List<List<Integer>>> rowSpaceMap;
+    private TreeMap<Integer, List<Integer>> continuousSpaceMap;
 
-    public ScheduleTask(int seatHoldId, Map<Integer,SeatHold> heldTickets, States[][] layout, Venue venue) {
+    public ScheduleTask(int seatHoldId, Map<Integer,SeatHold> heldTickets, Map<Integer, List<List<Integer>>> rowSpaceMap, TreeMap<Integer, List<Integer>> continuousSpaceMap) {
         this.seatHoldId = seatHoldId;
         this.heldTickets = heldTickets;
-        this.layout = layout;
+        this.rowSpaceMap = rowSpaceMap;
+        this.continuousSpaceMap = continuousSpaceMap;
         this.seatsInfo = heldTickets.get(seatHoldId);
-        this.venue = venue;
     }
 
     @Override
     public void run() {
         try {
-            seatsInfo.bookOrReleaseTickets(heldTickets, ReserveOrRelease.EXPIRED, venue, null);
+            seatsInfo.bookOrReleaseTickets(heldTickets, ReserveOrRelease.EXPIRED,null, rowSpaceMap, continuousSpaceMap);
         } catch (Exception e) {}
     }
 }

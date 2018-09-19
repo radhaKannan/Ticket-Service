@@ -14,11 +14,15 @@ public class TicketServiceImplementation implements TicketService {
     private static TicketServiceImplementation ticketService = null;
     private Map<Integer,SeatHold> heldTickets;
     private ScheduledExecutorService scheduler;
+    private TreeMap<Integer, List<Integer>> continuousSpaceMap;
+    private Map<Integer, List<List<Integer>>> rowSpaceMap;
 
     private TicketServiceImplementation(Venue venue, ScheduledExecutorService scheduler) {
         this.venue = venue;
         this.scheduler = scheduler;
         this.heldTickets = new HashMap<>();
+        this.continuousSpaceMap = Utilities.initializeContinuousSpace(venue);
+        this.rowSpaceMap = Utilities.initializeRowSpace(venue);
     }
 
     public static TicketServiceImplementation getInstance(Venue venue, ScheduledExecutorService scheduler) {
@@ -37,29 +41,28 @@ public class TicketServiceImplementation implements TicketService {
         if (numSeats > venue.getNumSeatsAvailable())
             throw new SeatsUnavailableException(SEATS_UNAVAILABLE_MSG);
         List<Seat> seats = new ArrayList<>();
-        States[][] layout = venue.getSeatInfo();
-        int ticketsBooked = 0;
-        for (int row = 0; row < layout.length; row++) {
-            for(int col = 0; col < layout[row].length; col++) {
-                if (layout[row][col] == States.AVAILABLE) {
-                    seats.add(new Seat(row,col));
-                    layout[row][col] = States.HELD;
-                    ticketsBooked++;
-                    if(ticketsBooked == numSeats)
-                        break;
-                }
+
+        if (continuousSpaceMap.containsKey(numSeats))
+            seats.add(Utilities.assignSeatBlocks(continuousSpaceMap, numSeats, rowSpaceMap));
+        else {
+            int seatsNeeded = numSeats;
+            int maxContinuous = continuousSpaceMap.lastKey();
+            while (maxContinuous <= seatsNeeded) {
+                seats.add(Utilities.assignSeatBlocks(continuousSpaceMap, maxContinuous, rowSpaceMap));
+                seatsNeeded = seatsNeeded - maxContinuous;
+                maxContinuous = continuousSpaceMap.lastKey();
             }
-            if(ticketsBooked == numSeats)
-                break;
+            if (seatsNeeded > 0)
+                seats.add(Utilities.assignRemainingSeatBlock(continuousSpaceMap, maxContinuous, rowSpaceMap));
         }
+
         Random random = new Random();
         int seatHoldId = random.nextInt();
         while(heldTickets.containsKey(seatHoldId))
             seatHoldId = random.nextInt();
         SeatHold seatHoldInfo = new SeatHold(seatHoldId, numSeats, customerEmail, seats);
         heldTickets.put(seatHoldId, seatHoldInfo);
-        venue.setSeatInfo(layout);
-        ScheduleTask scheduleTask = new ScheduleTask(seatHoldId, heldTickets, layout, venue);
+        ScheduleTask scheduleTask = new ScheduleTask(seatHoldId, heldTickets, rowSpaceMap, continuousSpaceMap);
         scheduler.schedule(scheduleTask, TIME_LEFT, TimeUnit.SECONDS);
         return seatHoldInfo;
     }
@@ -69,7 +72,7 @@ public class TicketServiceImplementation implements TicketService {
         SeatHold ticketsInfo = heldTickets.get(seatHoldId);
         if (ticketsInfo == null)
             throw new SessionExpiredException(SESSION_EXPIRED_MSG);
-        ticketsInfo.bookOrReleaseTickets(heldTickets, ReserveOrRelease.RESERVE, venue, customerEmail);
+        ticketsInfo.bookOrReleaseTickets(heldTickets, ReserveOrRelease.RESERVE, customerEmail, null, null);
         return UUID.randomUUID().toString();
     }
 }
