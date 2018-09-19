@@ -11,9 +11,9 @@ public class SeatHold {
     private int seatHoldId;
     private int numSeats;
     private String customerEmail;
-    private List<Seat> seatsInfo;
+    private List<SeatsBlock> seatsInfo;
 
-    public SeatHold(int seatHoldId, int numSeats, String customerEmail, List<Seat> seatsInfo) {
+    public SeatHold(int seatHoldId, int numSeats, String customerEmail, List<SeatsBlock> seatsInfo) {
         this.seatHoldId = seatHoldId;
         this.numSeats = numSeats;
         this.customerEmail = customerEmail;
@@ -32,7 +32,7 @@ public class SeatHold {
         return customerEmail;
     }
 
-    public List<Seat> getSeatsInfo() {
+    public List<SeatsBlock> getSeatsInfo() {
         return seatsInfo;
     }
 
@@ -46,12 +46,12 @@ public class SeatHold {
         }
         else if (function == ReserveOrRelease.EXPIRED) {
             if (heldTickets.containsKey(this.getSeatHoldId())) {
-                for (Seat seat : this.getSeatsInfo()) {
+                for (SeatsBlock seatsBlock : this.getSeatsInfo()) {
                     List<Integer> addBlock = new ArrayList<>();
-                    addBlock.add(seat.getStart());
-                    addBlock.add(seat.getEnd());
-                    List<List<Integer>> rowSeatBlocks = rowSpaceMap.get(seat.getRow());
-                    int continuousSeats = seat.getEnd() - seat.getRow() + 1;
+                    addBlock.add(seatsBlock.getStart());
+                    addBlock.add(seatsBlock.getEnd());
+                    List<List<Integer>> rowSeatBlocks = rowSpaceMap.get(seatsBlock.getRow());
+                    int continuousSeats = seatsBlock.getEnd() - seatsBlock.getRow() + 1;
                     int i = 0;
                     while (i < rowSeatBlocks.size()) {
                         if (rowSeatBlocks.get(i).get(0) > addBlock.get(1))
@@ -59,12 +59,12 @@ public class SeatHold {
                         i++;
                     }
                     rowSeatBlocks.add(i, addBlock);
-                    int mergeLeft = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seat);
+                    int mergeLeft = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seatsBlock);
                     int mergeRight;
                     if (mergeLeft == 0)
-                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i+1, continuousSpaceMap, seat);
+                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i+1, continuousSpaceMap, seatsBlock);
                     else
-                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seat);
+                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seatsBlock);
                     if (mergeRight != 0)
                         continuousSeats = mergeRight;
                     else if (mergeLeft != 0)
@@ -72,7 +72,7 @@ public class SeatHold {
                     List<Integer> continuousSpace = new ArrayList<>();
                     if (continuousSpaceMap.containsKey(continuousSeats))
                         continuousSpace = continuousSpaceMap.get(continuousSeats);
-                    continuousSpace.add(seat.getRow());
+                    continuousSpace.add(seatsBlock.getRow());
                     continuousSpaceMap.put(continuousSeats, continuousSpace);
                 }
                 venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-this.getNumSeats());

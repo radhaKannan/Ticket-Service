@@ -1,11 +1,11 @@
 package com.walmart.app;
 
-public class Seat {
+public class SeatsBlock {
     private int row;
     private int start;
     private int end;
 
-    public Seat(int row, int start, int end) {
+    public SeatsBlock(int row, int start, int end) {
         this.row = row;
         this.start = start;
         this.end = end;

@@ -40,26 +40,26 @@ public class TicketServiceImplementation implements TicketService {
     public synchronized SeatHold findAndHoldSeats(int numSeats, String customerEmail) throws SeatsUnavailableException {
         if (numSeats > venue.getNumSeatsAvailable())
             throw new SeatsUnavailableException(SEATS_UNAVAILABLE_MSG);
-        List<Seat> seats = new ArrayList<>();
+        List<SeatsBlock> seatBlocks = new ArrayList<>();
         if (continuousSpaceMap.containsKey(numSeats))
-            seats.add(Utilities.assignSeatBlocks(continuousSpaceMap, numSeats, rowSpaceMap));
+            seatBlocks.add(Utilities.assignSeatBlocks(continuousSpaceMap, numSeats, rowSpaceMap));
         else {
             int seatsNeeded = numSeats;
             int maxContinuous = continuousSpaceMap.lastKey();
             while (maxContinuous <= seatsNeeded) {
-                seats.add(Utilities.assignSeatBlocks(continuousSpaceMap, maxContinuous, rowSpaceMap));
+                seatBlocks.add(Utilities.assignSeatBlocks(continuousSpaceMap, maxContinuous, rowSpaceMap));
                 seatsNeeded = seatsNeeded - maxContinuous;
                 maxContinuous = continuousSpaceMap.lastKey();
             }
             if (seatsNeeded > 0)
-                seats.add(Utilities.assignRemainingSeatBlock(continuousSpaceMap, seatsNeeded, rowSpaceMap));
+                seatBlocks.add(Utilities.assignRemainingSeatBlock(continuousSpaceMap, seatsNeeded, rowSpaceMap));
         }
         venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-numSeats);
         Random random = new Random();
         int seatHoldId = random.nextInt();
         while(heldTickets.containsKey(seatHoldId))
             seatHoldId = random.nextInt();
-        SeatHold seatHoldInfo = new SeatHold(seatHoldId, numSeats, customerEmail, seats);
+        SeatHold seatHoldInfo = new SeatHold(seatHoldId, numSeats, customerEmail, seatBlocks);
         heldTickets.put(seatHoldId, seatHoldInfo);
         ScheduleTask scheduleTask = new ScheduleTask(seatHoldId, heldTickets, rowSpaceMap, continuousSpaceMap, venue);
         scheduler.schedule(scheduleTask, TIME_LEFT, TimeUnit.SECONDS);

@@ -1,5 +1,6 @@
 com\walmart\app\Constants.class
 com\walmart\app\ReserveOrRelease.class
+com\walmart\app\SeatsBlock.class
 com\walmart\app\ScheduleTask.class
 com\walmart\app\Utilities.class
 com\walmart\app\TicketService.class
@@ -9,4 +10,3 @@ com\walmart\app\App.class
 com\walmart\app\Exceptions\SessionExpiredException.class
 com\walmart\app\TicketServiceImplementation.class
 com\walmart\app\SeatHold.class
-com\walmart\app\Seat.class

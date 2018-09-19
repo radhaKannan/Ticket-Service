@@ -25,23 +25,23 @@ public final class Utilities {
         return continuousSpace;
     }
 
-    public static Seat assignSeatBlocks(Map<Integer, List<Integer>> continuousSpaceMap, int numSeats, Map<Integer, List<List<Integer>>> rowSpaceMap) {
-        Seat seat = null;
+    public static SeatsBlock assignSeatBlocks(Map<Integer, List<Integer>> continuousSpaceMap, int numSeats, Map<Integer, List<List<Integer>>> rowSpaceMap) {
+        SeatsBlock seatsBlock = null;
         int row = continuousSpaceMap.get(numSeats).remove(0);
         if (continuousSpaceMap.get(numSeats).isEmpty())
             continuousSpaceMap.remove(numSeats);
         List<List<Integer>> rowBlock = rowSpaceMap.get(row);
         for (List<Integer> block : rowBlock)
             if(block.get(1)-block.get(0)+1 == numSeats) {
-                seat = new Seat(row, block.get(0), block.get(1));
+                seatsBlock = new SeatsBlock(row, block.get(0), block.get(1));
                 rowBlock.remove(block);
                 break;
             }
-        return seat;
+        return seatsBlock;
     }
 
-    public static Seat assignRemainingSeatBlock(TreeMap<Integer, List<Integer>> continuousSpaceMap, int numSeats, Map<Integer, List<List<Integer>>> rowSpaceMap) {
-        Seat seat = null;
+    public static SeatsBlock assignRemainingSeatBlock(TreeMap<Integer, List<Integer>> continuousSpaceMap, int numSeats, Map<Integer, List<List<Integer>>> rowSpaceMap) {
+        SeatsBlock seatsBlock = null;
         int availableSpace = continuousSpaceMap.lastKey();
         int row = continuousSpaceMap.get(availableSpace).remove(0);
         if (continuousSpaceMap.get(availableSpace).isEmpty())
@@ -55,14 +55,14 @@ public final class Utilities {
         List<List<Integer>> rowBlock = rowSpaceMap.get(row);
         for (List<Integer> block : rowBlock)
             if(block.get(1)-block.get(0)+1 == availableSpace) {
-                seat = new Seat(row, block.get(0), block.get(0)+numSeats-1);
+                seatsBlock = new SeatsBlock(row, block.get(0), block.get(0)+numSeats-1);
                 block.set(0,block.get(0)+numSeats);
                 break;
             }
-        return seat;
+        return seatsBlock;
     }
 
-    public static Integer mergeLeftRowMap(List<List<Integer>> rowSeatBlocks, int index, TreeMap<Integer, List<Integer>> continuousSpaceMap, Seat seat) {
+    public static Integer mergeLeftRowMap(List<List<Integer>> rowSeatBlocks, int index, TreeMap<Integer, List<Integer>> continuousSpaceMap, SeatsBlock seatsBlock) {
         if (index == 0 || index >= rowSeatBlocks.size())
             return 0;
         int newContinuousSpace = 0;
@@ -72,7 +72,7 @@ public final class Utilities {
             oldContinuousSpace = rowSeatBlocks.get(index-1).get(1) - rowSeatBlocks.get(index-1).get(0) + 1;
             rowSeatBlocks.get(index-1).set(1,rowSeatBlocks.get(index).get(1));
             rowSeatBlocks.remove(index);
-            continuousSpaceMap.get(oldContinuousSpace).remove(seat.getRow());
+            continuousSpaceMap.get(oldContinuousSpace).remove(seatsBlock.getRow());
             if (continuousSpaceMap.get(oldContinuousSpace).isEmpty())
                 continuousSpaceMap.remove(oldContinuousSpace);
         }
