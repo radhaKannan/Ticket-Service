@@ -2,18 +2,24 @@ package com.walmart.app;
 
 public class Seat {
     private int row;
-    private int column;
+    private int start;
+    private int end;
 
-    public Seat(int row, int column) {
+    public Seat(int row, int start, int end) {
         this.row = row;
-        this.column = column;
+        this.start = start;
+        this.end = end;
     }
 
     public int getRow() {
         return row;
     }
 
-    public int getColumn() {
-        return column;
+    public int getStart() {
+        return start;
+    }
+
+    public int getEnd() {
+        return end;
     }
 }
