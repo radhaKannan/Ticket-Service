@@ -41,7 +41,6 @@ public class TicketServiceImplementation implements TicketService {
         if (numSeats > venue.getNumSeatsAvailable())
             throw new SeatsUnavailableException(SEATS_UNAVAILABLE_MSG);
         List<Seat> seats = new ArrayList<>();
-
         if (continuousSpaceMap.containsKey(numSeats))
             seats.add(Utilities.assignSeatBlocks(continuousSpaceMap, numSeats, rowSpaceMap));
         else {
@@ -53,16 +52,16 @@ public class TicketServiceImplementation implements TicketService {
                 maxContinuous = continuousSpaceMap.lastKey();
             }
             if (seatsNeeded > 0)
-                seats.add(Utilities.assignRemainingSeatBlock(continuousSpaceMap, maxContinuous, rowSpaceMap));
+                seats.add(Utilities.assignRemainingSeatBlock(continuousSpaceMap, seatsNeeded, rowSpaceMap));
         }
-
+        venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-numSeats);
         Random random = new Random();
         int seatHoldId = random.nextInt();
         while(heldTickets.containsKey(seatHoldId))
             seatHoldId = random.nextInt();
         SeatHold seatHoldInfo = new SeatHold(seatHoldId, numSeats, customerEmail, seats);
         heldTickets.put(seatHoldId, seatHoldInfo);
-        ScheduleTask scheduleTask = new ScheduleTask(seatHoldId, heldTickets, rowSpaceMap, continuousSpaceMap);
+        ScheduleTask scheduleTask = new ScheduleTask(seatHoldId, heldTickets, rowSpaceMap, continuousSpaceMap, venue);
         scheduler.schedule(scheduleTask, TIME_LEFT, TimeUnit.SECONDS);
         return seatHoldInfo;
     }
@@ -72,7 +71,7 @@ public class TicketServiceImplementation implements TicketService {
         SeatHold ticketsInfo = heldTickets.get(seatHoldId);
         if (ticketsInfo == null)
             throw new SessionExpiredException(SESSION_EXPIRED_MSG);
-        ticketsInfo.bookOrReleaseTickets(heldTickets, ReserveOrRelease.RESERVE, customerEmail, null, null);
+        ticketsInfo.bookOrReleaseTickets(heldTickets, ReserveOrRelease.RESERVE, customerEmail, null, null, null);
         return UUID.randomUUID().toString();
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.walmart.app.AppTest" time="0.093" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.walmart.app.AppTest" time="0.074" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-9.0.1\bin"/>
-    <property name="sun.java.command" value="C:\Users\radha\AppData\Local\Temp\surefire984922085408399537\surefirebooter16200087865739368944.jar C:\Users\radha\AppData\Local\Temp\surefire984922085408399537 2018-09-18T19-00-04_364-jvmRun1 surefire1494489891210392773tmp surefire_014340729082522631334tmp"/>
+    <property name="sun.java.command" value="C:\Users\radha\AppData\Local\Temp\surefire15436691513359791524\surefirebooter13764479672040582928.jar C:\Users\radha\AppData\Local\Temp\surefire15436691513359791524 2018-09-19T14-12-40_544-jvmRun1 surefire16946237952455943105tmp surefire_013072719848649747326tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Radha\Walmart\Reston\Ticket-Service\target\test-classes;C:\Radha\Walmart\Reston\Ticket-Service\target\classes;C:\Users\radha\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\radha\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\radha\AppData\Local\Temp\surefire984922085408399537\surefirebooter16200087865739368944.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\radha\AppData\Local\Temp\surefire15436691513359791524\surefirebooter13764479672040582928.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="9.0.1+11"/>
@@ -60,5 +60,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="53.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.walmart.app.AppTest" time="0.004"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.walmart.app.AppTest" time="0.001"/>
 </testsuite>

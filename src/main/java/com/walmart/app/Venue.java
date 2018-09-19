@@ -29,4 +29,8 @@ public class Venue {
     public int getNumSeatsAvailable() {
         return numSeatsAvailable;
     }
+
+    public void setNumSeatsAvailable(int numSeatsAvailable) {
+        this.numSeatsAvailable = numSeatsAvailable;
+    }
 }

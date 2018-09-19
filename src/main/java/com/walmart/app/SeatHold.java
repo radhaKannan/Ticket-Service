@@ -36,7 +36,7 @@ public class SeatHold {
         return seatsInfo;
     }
 
-    public synchronized void bookOrReleaseTickets(Map<Integer,SeatHold> heldTickets, ReserveOrRelease function, String customerEmail, Map<Integer, List<List<Integer>>> rowSpaceMap, TreeMap<Integer, List<Integer>> continuousSpaceMap) throws SessionExpiredException, IllegalAccessException {
+    public synchronized void bookOrReleaseTickets(Map<Integer,SeatHold> heldTickets, ReserveOrRelease function, String customerEmail, Map<Integer, List<List<Integer>>> rowSpaceMap, TreeMap<Integer, List<Integer>> continuousSpaceMap, Venue venue) throws SessionExpiredException, IllegalAccessException {
         if (function == ReserveOrRelease.RESERVE) {
             if (!heldTickets.containsKey(this.getSeatHoldId()))
                 throw new SessionExpiredException(SESSION_EXPIRED_MSG);
@@ -75,6 +75,7 @@ public class SeatHold {
                     continuousSpace.add(seat.getRow());
                     continuousSpaceMap.put(continuousSeats, continuousSpace);
                 }
+                venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-this.getNumSeats());
                 heldTickets.remove(this.getSeatHoldId());
             }
         }

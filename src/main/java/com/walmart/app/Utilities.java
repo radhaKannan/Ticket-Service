@@ -70,11 +70,12 @@ public final class Utilities {
         if (rowSeatBlocks.get(index).get(0) == rowSeatBlocks.get(index-1).get(1)+1) {
             newContinuousSpace = rowSeatBlocks.get(index).get(1) - rowSeatBlocks.get(index-1).get(0) + 1;
             oldContinuousSpace = rowSeatBlocks.get(index-1).get(1) - rowSeatBlocks.get(index-1).get(0) + 1;
+            rowSeatBlocks.get(index-1).set(1,rowSeatBlocks.get(index).get(1));
+            rowSeatBlocks.remove(index);
             continuousSpaceMap.get(oldContinuousSpace).remove(seat.getRow());
-            if (continuousSpaceMap.get(oldContinuousSpace).size() == 0)
+            if (continuousSpaceMap.get(oldContinuousSpace).isEmpty())
                 continuousSpaceMap.remove(oldContinuousSpace);
         }
         return newContinuousSpace;
     }
-
 }
