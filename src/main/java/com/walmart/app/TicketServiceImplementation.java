@@ -38,7 +38,7 @@ public class TicketServiceImplementation implements TicketService {
 
     @Override
     public synchronized SeatHold findAndHoldSeats(int numSeats, String customerEmail) throws SeatsUnavailableException {
-        if (numSeats > venue.getNumSeatsAvailable())
+        if (numSeats < 1 && numSeats > venue.getNumSeatsAvailable())
             throw new SeatsUnavailableException(SEATS_UNAVAILABLE_MSG);
         List<SeatsBlock> seatBlocks = new ArrayList<>();
         if (continuousSpaceMap.containsKey(numSeats))

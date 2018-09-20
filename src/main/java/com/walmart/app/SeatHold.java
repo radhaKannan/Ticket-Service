@@ -51,7 +51,7 @@ public class SeatHold {
                     addBlock.add(seatsBlock.getStart());
                     addBlock.add(seatsBlock.getEnd());
                     List<List<Integer>> rowSeatBlocks = rowSpaceMap.get(seatsBlock.getRow());
-                    int continuousSeats = seatsBlock.getEnd() - seatsBlock.getRow() + 1;
+                    int continuousSeats = seatsBlock.getEnd() - seatsBlock.getStart() + 1;
                     int i = 0;
                     while (i < rowSeatBlocks.size()) {
                         if (rowSeatBlocks.get(i).get(0) > addBlock.get(1))
@@ -59,21 +59,30 @@ public class SeatHold {
                         i++;
                     }
                     rowSeatBlocks.add(i, addBlock);
-                    int mergeLeft = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seatsBlock);
-                    int mergeRight;
-                    if (mergeLeft == 0)
-                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i+1, continuousSpaceMap, seatsBlock);
-                    else
-                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seatsBlock);
-                    if (mergeRight != 0)
-                        continuousSeats = mergeRight;
-                    else if (mergeLeft != 0)
-                        continuousSeats = mergeLeft;
                     List<Integer> continuousSpace = new ArrayList<>();
                     if (continuousSpaceMap.containsKey(continuousSeats))
                         continuousSpace = continuousSpaceMap.get(continuousSeats);
                     continuousSpace.add(seatsBlock.getRow());
                     continuousSpaceMap.put(continuousSeats, continuousSpace);
+                    int mergeLeft = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seatsBlock);
+                    int mergeRight;
+                    if (mergeLeft == 0)
+                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i+1, continuousSpaceMap, seatsBlock);
+                    else {
+                        continuousSpace = new ArrayList<>();
+                        if (continuousSpaceMap.containsKey(mergeLeft))
+                            continuousSpace = continuousSpaceMap.get(mergeLeft);
+                        continuousSpace.add(seatsBlock.getRow());
+                        continuousSpaceMap.put(mergeLeft, continuousSpace);
+                        mergeRight = Utilities.mergeLeftRowMap(rowSeatBlocks, i, continuousSpaceMap, seatsBlock);
+                    }
+                    if (mergeRight != 0) {
+                        continuousSpace = new ArrayList<>();
+                        if (continuousSpaceMap.containsKey(mergeRight))
+                            continuousSpace = continuousSpaceMap.get(mergeRight);
+                        continuousSpace.add(seatsBlock.getRow());
+                        continuousSpaceMap.put(mergeRight, continuousSpace);
+                    }
                 }
                 venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-this.getNumSeats());
                 heldTickets.remove(this.getSeatHoldId());

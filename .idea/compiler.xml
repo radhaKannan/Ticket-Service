@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Coding Challenge" />
+        <module name="Ticket-Service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Coding Challenge" target="1.7" />
+      <module name="Ticket-Service" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

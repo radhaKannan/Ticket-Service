@@ -1,1 +1,4 @@
 com\walmart\app\AppTest.class
+com\walmart\app\mockData\DummyObjects.class
+com\walmart\app\SeatHoldTest.class
+com\walmart\app\UtilitiesTest.class
