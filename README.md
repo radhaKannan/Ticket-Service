@@ -3,7 +3,9 @@ This TicketServiceImplementation is written in Java and uses Maven as its build 
 
 The generated jar file is located in the target folder under the name *ticket-service-1.0-SNAPSHOT.jar*
 
-The groupId of this maven project is *com.walmart.app* and the main method is in the *App.java* file at *src/main/java/com/walmart/app* 
+The groupId of this maven project is *com.walmart.app*
+
+The main method is in the *App.java* file at *src/main/java/com/walmart/app*
 
 JUnit and Mockito are the testing frameworks that are used.
 ### Design
@@ -74,16 +76,16 @@ The task checks for if the seatHold object has been reserved or is still present
 If present, it iterates through each SeatsBlock present in that SeatHold object, and adds that block to the rowSpaceMap and its corresponding space to continuousSpaceMap.
 After adding, it checks the previous and next block in rowSpaceMap to see if they are continuous and merges into one single continuous block and accordingly updates the continuousSpaceMap too.
 ```
-initial row space map and       A new block in row 0            added block is merged with left block       Then checks with
-continuous space map            seat 2 and 3 is released        {                                           right side block
-{                               {                                   0: [[0 3] [4 5]]                        {
-    0: [[0 1] [4 5]]                0: [[0 1] [2 3] [4 5]]          1: [[0 5]]                                  0: [[0 5]]
-    1: [[0 5]]                      1: [[0 5]]                  }                                               1: [[0 5]]
-}                               }                               {                                           }
-{                               {                                   2: [0]                                  {
-    2: [0 0]                        2: [0 0 0]                      4: [0]                                      6: [0 1]
-    6: [1]                          6: [1]                          6: [1]                                  }
-}                               }                               }                                           Flow of both the maps
+initial row space map and       A new block in row 0            new block merged with left block       Then checks with
+continuous space map            seat 2 and 3 is released        {                                      right side block
+{                               {                                   0: [[0 3] [4 5]]                   {
+    0: [[0 1] [4 5]]                0: [[0 1] [2 3] [4 5]]          1: [[0 5]]                             0: [[0 5]]
+    1: [[0 5]]                      1: [[0 5]]                  }                                          1: [[0 5]]
+}                               }                               {                                      }
+{                               {                                   2: [0]                             {
+    2: [0 0]                        2: [0 0 0]                      4: [0]                                 6: [0 1]
+    6: [1]                          6: [1]                          6: [1]                             }
+}                               }                               }                                      Flow of the maps
 ```
 ##### Confirm Tickets
 Checks if the requested seatHold object is present in the heldTickets map and if present, removes it from the map and generates and returns a code.
@@ -94,7 +96,7 @@ Wrote unit tests to check if the rowSpaceMap and continuousSpaceMap get modified
 ### Run the application
 The jar is built and packaged and located in the target folder.
 
-The executable java file is the App.java that creates an instance of the TicketServiceImplementation and facilitates its simulation by interacting with the user.
+The executable java file is the App.java, a single threaded simulation of the TicketServiceImplementation to test the functionality of the application by interacting with the user.
 ### Expected Output
 ```
 Enter the number of rows in the venue: 3

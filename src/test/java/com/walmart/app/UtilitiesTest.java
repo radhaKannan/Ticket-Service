@@ -14,20 +14,6 @@ import static org.mockito.Mockito.*;
 public class UtilitiesTest {
     Venue mockedVenue = mock(Venue.class);
 
-    @Test
-    public void initializeRowSpace() {
-        when(mockedVenue.getNumRows()).thenReturn(2);
-        when(mockedVenue.getNumColumns()).thenReturn(4);
-        assertEquals(Utilities.initializeRowSpace(mockedVenue), DummyObjects.returnRowSpace());
-    }
-
-    @Test
-    public void initializeContinuousSpace() {
-        when(mockedVenue.getNumRows()).thenReturn(2);
-        when(mockedVenue.getNumColumns()).thenReturn(4);
-        assertEquals(Utilities.initializeContinuousSpace(mockedVenue), DummyObjects.returnContinuousSpace());
-    }
-
     /*
     Test to check if one block space is assigned as it is and if the continuous space maps and the row space maps are
     being modified correctly. Checked for 4 tickets in the initial state of the map with 4 cols and 2 rows.

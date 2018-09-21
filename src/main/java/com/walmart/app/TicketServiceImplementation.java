@@ -10,7 +10,8 @@ import java.util.concurrent.TimeUnit;
 import static com.walmart.app.Constants.*;
 
 /*
-Implementation of the TicketService interface.
+Implementation of TicketService interface. Singleton class. Synchronized on hold seats method.
+No 2 objects of this instance can want to hold seats at same time. Best available seats assigned on first come basis.
 Maintains three maps to keep track of the seats available in the venue and to check for validity of request.
 rowSpaceMap keeps track of the different continuous space blocks in each row.
 continuousSpaceMap keeps track of the rows corresponding to a continuous space.
@@ -18,18 +19,18 @@ heldTickets keeps track of the hold requests that have been placed.
  */
 public class TicketServiceImplementation implements TicketService {
     private Venue venue;
-    private static TicketServiceImplementation ticketService = null;
     private Map<Integer,SeatHold> heldTickets;
     private ScheduledExecutorService scheduler;
-    private TreeMap<Integer, List<Integer>> continuousSpaceMap;
     private Map<Integer, List<List<Integer>>> rowSpaceMap;
+    private TreeMap<Integer, List<Integer>> continuousSpaceMap;
+    private static TicketServiceImplementation ticketService = null;
 
     private TicketServiceImplementation(Venue venue, ScheduledExecutorService scheduler) {
         this.venue = venue;
         this.scheduler = scheduler;
-        this.heldTickets = new HashMap<>();
-        this.continuousSpaceMap = Utilities.initializeContinuousSpace(venue);
-        this.rowSpaceMap = Utilities.initializeRowSpace(venue);
+        this.heldTickets = venue.getHeldTickets();
+        this.rowSpaceMap = venue.getRowSpaceMap();
+        this.continuousSpaceMap = venue.getContinuousSpaceMap();
     }
 
     public static TicketServiceImplementation getInstance(Venue venue, ScheduledExecutorService scheduler) {
@@ -75,7 +76,7 @@ public class TicketServiceImplementation implements TicketService {
         }
         venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-numSeats);
         Random random = new Random();
-        int seatHoldId = random.nextInt();
+        int seatHoldId = random.nextInt() & Integer.MAX_VALUE;
         while(heldTickets.containsKey(seatHoldId))
             seatHoldId = random.nextInt();
         SeatHold seatHoldInfo = new SeatHold(seatHoldId, numSeats, customerEmail, seatBlocks);

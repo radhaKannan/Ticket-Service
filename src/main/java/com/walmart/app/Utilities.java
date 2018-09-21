@@ -5,44 +5,6 @@ import java.util.*;
 public final class Utilities {
 
     /*
-    Fills the rowSpaceMap. If 2 rows and 4 columns present, it would look like:
-    {
-        0: [[0 3]]
-        1: [[0 3]]
-    }
-    The keys are the different rows and the value is the list of continuous spaces available in that row.
-     */
-    public static HashMap<Integer, List<List<Integer>>> initializeRowSpace(Venue venue) {
-        HashMap<Integer, List<List<Integer>>> rowSpace = new HashMap<>();
-        for (int row = 0; row < venue.getNumRows(); row++) {
-            List<Integer> initialSpace = new ArrayList<>();
-            initialSpace.add(0);
-            initialSpace.add(venue.getNumColumns()-1);
-            List<List<Integer>> rowSpaceBlocks = new ArrayList<>();
-            rowSpaceBlocks.add(initialSpace);
-            rowSpace.put(row, rowSpaceBlocks);
-        }
-        return rowSpace;
-    }
-
-    /*
-    Fills the continuous space map. If 2 rows and 4 columns:
-    {
-        4: [0 1]
-    }
-    The key indicates the continuous space available in the venue and
-    the value says in which all rows that space is available.
-     */
-    public static TreeMap<Integer, List<Integer>> initializeContinuousSpace(Venue venue) {
-        TreeMap<Integer, List<Integer>> continuousSpace = new TreeMap<>();
-        List<Integer> rows = new ArrayList<>();
-        for(int row = 0; row < venue.getNumRows(); row++)
-            rows.add(row);
-        continuousSpace.put(venue.getNumColumns(),rows);
-        return continuousSpace;
-    }
-
-    /*
     Returns a block of continuous space as it is.
     Removes it from the rowSpaceMap and continuousSpaceMap.
      */
