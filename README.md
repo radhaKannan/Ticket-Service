@@ -1,12 +1,19 @@
 # Ticket-Service
 This TicketServiceImplementation is written in Java and uses Maven as its build tool.
 
-The generated jar file is located in the target folder under the name ticket-service-1.0-SNAPSHOT.jar
+The generated jar file is located in the target folder under the name *ticket-service-1.0-SNAPSHOT.jar*
 
-The groupId of this maven project is com.walmart.app and the main method is in the App.java file at src/main/java/com/walmart/app 
+The groupId of this maven project is *com.walmart.app* and the main method is in the *App.java* file at *src/main/java/com/walmart/app* 
 
 JUnit and Mockito are the testing frameworks that are used.
 ### Design
+Finding the perfect solution is a NP-hard problem. For an exact solution, backtracking can be used (takes a lot of time though), checking all the possibilities 
+and choosing the best one. Greedy solution can be used, but it will not be optimized.
+
+This program allocates maximum number of continuous seats to an user. At any given point, this program tries to find a continuous block of space. 
+If a continuous space is not found, it splits and tries to find the maximum block that can accommodate most of the people in the reservation. 
+In case of release of tickets, the gaps created in between filled blocks are also considered the next time a user lodges a request.
+
 Two HashMaps (heldTickets and rowSpaceMap) and one TreeMap (continuousSpaceMap) is used to track the number of seats available in the venue.
 
 The **heldTickets** map stores the seatHoldId and its corresponding seatHold object. 
@@ -103,7 +110,7 @@ Your choice (1, 2 or 3)? 1
 
 Available seats: 12                 //rows*columns
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 
@@ -120,7 +127,7 @@ Seat Number: 0
 Seat Number: 1
 Seat Number: 2
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 
@@ -130,7 +137,7 @@ Your choice (1, 2 or 3)? 1
 
 Available seats: 9                  //previous (12) - held (3)
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 
@@ -150,7 +157,7 @@ Seat Number: 3
 Seats assigned in row: 0            //Allocating the left out person in row 0 seat 3
 Seat Number: 3                      //seat 0, 1 and 2 is being held by user qwerty
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 
@@ -163,7 +170,7 @@ Enter email: abcd
 
 Your confirmation code is: a2d83e3a-a689-4d68-8d3c-0aa18ba4c8cf
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 
@@ -172,7 +179,8 @@ Menu
 Your choice (1, 2 or 3)? 1
 
 Available seats: 7                  //previous availability was 9 (12-3) and after that abcd held 5
-Press any letter to proceed.        //so it should effectively be 4 but time has expired on qwerty's hold
+                                    //so it should effectively be 4 but time has expired on qwerty's hold
+Press any key to proceed.           
 
 Menu 
 1. Availability 
@@ -185,7 +193,7 @@ Email ID: aqws
 
 The requested number of seats is not available.
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 
@@ -198,7 +206,7 @@ Enter email: qwerty                 //time has expired and those seats have been
 
 The wait time on the tickets that were being held has expired.
 
-Press any letter to proceed.
+Press any key to proceed.
 
 Menu 
 1. Availability 

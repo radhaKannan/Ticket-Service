@@ -2,35 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e09fc1f8-2840-4b73-9e37-10a5e9c68c17" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/App.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/App.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/Constants.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/Constants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/ScheduleTask.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/ScheduleTask.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/SeatHold.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/SeatHold.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/SeatsBlock.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/SeatsBlock.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/TicketServiceImplementation.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/TicketServiceImplementation.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/Utilities.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/Utilities.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/walmart/app/Venue.class" afterPath="$PROJECT_DIR$/target/classes/com/walmart/app/Venue.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/walmart/app/SeatHoldTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/walmart/app/SeatHoldTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/walmart/app/UtilitiesTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/walmart/app/UtilitiesTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ticket-service-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/target/ticket-service-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/App.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/Constants.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/ScheduleTask.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/ScheduleTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/SeatHold.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/SeatHold.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/SeatsBlock.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/SeatsBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/TicketServiceImplementation.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/TicketServiceImplementation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/Utilities.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/Utilities.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/walmart/app/Venue.java" afterPath="$PROJECT_DIR$/src/main/java/com/walmart/app/Venue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/walmart/app/SeatHoldTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/walmart/app/SeatHoldTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/walmart/app/UtilitiesTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/walmart/app/UtilitiesTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.walmart.app.AppTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.walmart.app.AppTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.walmart.app.SeatHoldTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.walmart.app.SeatHoldTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.walmart.app.UtilitiesTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.walmart.app.UtilitiesTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.walmart.app.AppTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.walmart.app.AppTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.walmart.app.SeatHoldTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.walmart.app.SeatHoldTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.walmart.app.UtilitiesTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.walmart.app.UtilitiesTest.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -121,11 +93,11 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="-348">
-                <caret line="66" column="85" lean-forward="false" selection-start-line="66" selection-start-column="85" selection-end-line="66" selection-end-column="85" />
+            <state split_layout="SECOND">
+              <first_editor relative-caret-position="252">
+                <caret line="12" column="138" lean-forward="false" selection-start-line="12" selection-start-column="138" selection-end-line="12" selection-end-column="138" />
                 <folding>
-                  <marker date="1537516024474" expanded="true" signature="2729:2847" ph="{...}" />
+                  <marker date="1537517987213" expanded="true" signature="3408:3526" ph="{...}" />
                 </folding>
               </first_editor>
               <second_editor />
@@ -615,8 +587,8 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32918552" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1064,11 +1036,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="-348">
-            <caret line="66" column="85" lean-forward="false" selection-start-line="66" selection-start-column="85" selection-end-line="66" selection-end-column="85" />
+        <state split_layout="SECOND">
+          <first_editor relative-caret-position="252">
+            <caret line="12" column="138" lean-forward="false" selection-start-line="12" selection-start-column="138" selection-end-line="12" selection-end-column="138" />
             <folding>
-              <marker date="1537516024474" expanded="true" signature="2729:2847" ph="{...}" />
+              <marker date="1537517987213" expanded="true" signature="3408:3526" ph="{...}" />
             </folding>
           </first_editor>
           <second_editor />
@@ -1078,7 +1050,7 @@
         <state relative-caret-position="42">
           <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
-            <marker date="1537516024474" expanded="true" signature="2729:2847" ph="{...}" />
+            <marker date="1537517987213" expanded="true" signature="3408:3526" ph="{...}" />
           </folding>
         </state>
       </provider>
