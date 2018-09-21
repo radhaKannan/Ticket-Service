@@ -2,9 +2,11 @@
 This TicketServiceImplementation is written in Java and uses Maven as its build tool. 
 
 JUnit and Mockito are the testing frameworks that are used.
-
 ### Design
 Two HashMaps (heldTickets and rowSpaceMap) and one TreeMap (continuousSpaceMap) is used to track the number of seats available in the venue.
+
+The **heldTickets** map stores the seatHoldId and its corresponding seatHold object. 
+This allows to keep track of the tickets currently being held.
 
 The **rowSpaceMap** holds the row number and the list of continuous seat blocks in that row.
 For example, if the venue has 2 rows and 6 columns and if seat numbers 2 and 3 are booked in row 0, then the rowSpaceMap would look like:
@@ -19,23 +21,14 @@ Over here, there is one continuous seat block in row 1 having 6 continuous seats
 Row 0 has two seat blocks that have 2 continuous seats in seat 0 and seat 1 & seat 4 and seat 5 respectively.
 
 The **continuousSpaceMap** contains the number of continuous seats and the rows in which they are available.
-If seats 2 & 3 in row 0 are booked, continuousSpaceMap would be:
+If seats 2 & 3 in row 0 are booked, continuousSpaceMap would indicate that 6 continuous seats are available in row 1, and row 0 has two blocks that have 2 continuous seats.
 ```
 {
     2: [0 0]
     6: [1]
 }
 ```
-indicating that 6 continuous seats are available in row 1 and row 0 has two blocks that have 2 continuous seats.
-
-The **heldTickets** map stores the seatHoldId and its corresponding seatHold object. 
-This allows to keep track of the tickets currently being held.
-
 ### Implementation
-##### Confirm Tickets
-Checks if the requested seatHold object is present in the heldTickets map and if present, removes it from the map and generates and returns a code.
-If not, the wait time on the blocks has expired and the object has been removed from the map by a scheduled task and a SessionExpiredException is thrown.
-
 #### Hold Tickets
 The user can place a request to hold seats by sending a valid integer.
 A valid integer is greater than 0 and less than or equal to the number of seats available in the venue.
@@ -63,14 +56,12 @@ After a block has been assigned, it is removed from both the rowSpaceMap and the
 
 A seatHoldId is generated and pushed to the heldTickets map along with the assigned seatHold object.
 The **SeatHold** object contains a List of **SeatsBlock** that says in which row that block is and from where it starts and ends.
-
 ##### Release Tickets
 A timer task is scheduled at the end of Hold Tickets and the default time in the constants file is set to 300 seconds.
 The task checks for if the seatHold object has been reserved or is still present in the heldTickets map.
 
 If present, it iterates through each SeatsBlock present in that SeatHold object, and adds that block to the rowSpaceMap and its corresponding space to continuousSpaceMap.
 After adding, it checks the previous and next block in rowSpaceMap to see if they are continuous and merges into one single continuous block and accordingly updates the continuousSpaceMap too.
-
 ```
 initial row space map and       A new block in row 0            added block is merged with left block       Then checks with
 continuous space map            seat 2 and 3 is released        {                                           right side block
@@ -82,3 +73,7 @@ continuous space map            seat 2 and 3 is released        {               
     2: [0 0]                        2: [0 0 0]                      4: [0]                                      6: [0 1]
     6: [1]                          6: [1]                          6: [1]                                  }
 }                               }                               }                                           Flow of both the maps
+```
+##### Confirm Tickets
+Checks if the requested seatHold object is present in the heldTickets map and if present, removes it from the map and generates and returns a code.
+If not, the wait time on the blocks has expired and the object has been removed from the map by a scheduled task and a SessionExpiredException is thrown.
