@@ -1,5 +1,9 @@
 package com.walmart.app;
 
+/*
+Venue is a singleton class and holds the number of seats available at any given point in time.
+During object creation, number of rows and columns is set which is used to calculate the number of seats available.
+ */
 public class Venue {
     private static Venue venueInstance = null;
     private int numRows;

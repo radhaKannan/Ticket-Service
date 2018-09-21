@@ -7,6 +7,10 @@ import java.util.*;
 import static com.walmart.app.Constants.ILLEGAL_ACCESS_MSG;
 import static com.walmart.app.Constants.SESSION_EXPIRED_MSG;
 
+/*
+Stores the list of continuous space blocks that have been assigned to a hold request.
+Has a synchronized method bookOrReleaseTickets to monitor reservations or expiration of a hold request.
+ */
 public class SeatHold {
     private int seatHoldId;
     private int numSeats;
@@ -36,6 +40,19 @@ public class SeatHold {
         return seatsInfo;
     }
 
+    /*
+    In case of reserve tickets, checks for if the request is available in the heldTickets map or if it has expired.
+    Also checks if the unique email associated with each hold request is the same id that is being used to book them.
+    If valid reserve request, removes the hold request from heldTickets, indicating that those seats have been booked.
+
+    In case of expiry of hold tickets and automatic trigger of release tickets:
+    Check if the request has been already finalised or not.
+    Iterate through all seat blocks in that seatHold object and add them back to the rowSpaceMap. Correspondingly,
+    continuousSpaceMap should also be updated.
+    Check if left block in rowSpaceMap is continuous with released block and merge if necessary. Check if right block
+    is continuous and merge accordingly. Every time a merge happens, continuousSpaceMap needs to be updated too.
+    Add the released seats back to the total number of seats available. Remove request from heldTickets map.
+     */
     public synchronized void bookOrReleaseTickets(Map<Integer,SeatHold> heldTickets, ReserveOrRelease function, String customerEmail, Map<Integer, List<List<Integer>>> rowSpaceMap, TreeMap<Integer, List<Integer>> continuousSpaceMap, Venue venue) throws SessionExpiredException, IllegalAccessException {
         if (function == ReserveOrRelease.RESERVE) {
             if (!heldTickets.containsKey(this.getSeatHoldId()))
@@ -84,7 +101,7 @@ public class SeatHold {
                         continuousSpaceMap.put(mergeRight, continuousSpace);
                     }
                 }
-                venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()-this.getNumSeats());
+                venue.setNumSeatsAvailable(venue.getNumSeatsAvailable()+this.getNumSeats());
                 heldTickets.remove(this.getSeatHoldId());
             }
         }

@@ -28,6 +28,10 @@ public class UtilitiesTest {
         assertEquals(Utilities.initializeContinuousSpace(mockedVenue), DummyObjects.returnContinuousSpace());
     }
 
+    /*
+    Test to check if one block space is assigned as it is and if the continuous space maps and the row space maps are
+    being modified correctly. Checked for 4 tickets in the initial state of the map with 4 cols and 2 rows.
+     */
     @Test
     public void assignSeatBlock() {
         Map<Integer, List<Integer>> expectedContinuousSpaceMap = DummyObjects.returnContinuousSpace();
@@ -44,6 +48,10 @@ public class UtilitiesTest {
         assertEquals(expectedRowSpaceMap, actualRowMap);
     }
 
+    /*
+    Checking for 2 tickets requested when the venue has 4 columns and 2 rows.
+    2 tickets from row 0 need to be pulled out and assigned.
+     */
     @Test
     public void assignPartialSeatBlock() {
         TreeMap<Integer, List<Integer>> expectedContinuousSpaceMap = DummyObjects.returnContinuousSpace();
@@ -64,6 +72,10 @@ public class UtilitiesTest {
         assertEquals(expectedRowSpaceMap, actualRowMap);
     }
 
+    /*
+    checking if merge happens properly during release of tickets.
+    releasing tickets 2 and 3 in row 0. Seats 0 and 1 are not booked and available in map.
+     */
     @Test
     public void mergeTwoContinuousBlocks() {
         List<List<Integer>> expectedRowSeatBlocks = DummyObjects.returnRowSpace().get(0);
@@ -84,6 +96,13 @@ public class UtilitiesTest {
         assertEquals(expectedRowSeatBlocks, actualRowSeatBlocks);
     }
 
+    /*
+    checking for edge cases while merging, like first block will not have a left side block to merge.
+    similarly, merge for an index not in the row block is also not possible.
+    tested with having seats 0 and 1 in row 0. passing index 0 to merge with left block.
+    no left block hence unable to merge. returns a 0 saying no spaces were merged.
+    tested by passing index as 1 for checking right hand side and no block found at index 1. returns 0 again.
+     */
     @Test
     public void mergeTwoContinuousBlocksNotPossible() {
         List<List<Integer>> expectedRowSeatBlocks = DummyObjects.returnRowSpace().get(0);

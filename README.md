@@ -1,5 +1,9 @@
 # Ticket-Service
-This TicketServiceImplementation is written in Java and uses Maven as its build tool. 
+This TicketServiceImplementation is written in Java and uses Maven as its build tool.
+
+The generated jar file is located in the target folder under the name ticket-service-1.0-SNAPSHOT.jar
+
+The groupId of this maven project is com.walmart.app and the main method is in the App.java file at src/main/java/com/walmart/app 
 
 JUnit and Mockito are the testing frameworks that are used.
 ### Design
@@ -57,7 +61,7 @@ After a block has been assigned, it is removed from both the rowSpaceMap and the
 A seatHoldId is generated and pushed to the heldTickets map along with the assigned seatHold object.
 The **SeatHold** object contains a List of **SeatsBlock** that says in which row that block is and from where it starts and ends.
 ##### Release Tickets
-A timer task is scheduled at the end of Hold Tickets and the default time in the constants file is set to 300 seconds.
+A timer task is scheduled at the end of Hold Tickets and the default time in the constants file is set to 120 seconds.
 The task checks for if the seatHold object has been reserved or is still present in the heldTickets map.
 
 If present, it iterates through each SeatsBlock present in that SeatHold object, and adds that block to the rowSpaceMap and its corresponding space to continuousSpaceMap.
@@ -77,3 +81,130 @@ continuous space map            seat 2 and 3 is released        {               
 ##### Confirm Tickets
 Checks if the requested seatHold object is present in the heldTickets map and if present, removes it from the map and generates and returns a code.
 If not, the wait time on the blocks has expired and the object has been removed from the map by a scheduled task and a SessionExpiredException is thrown.
+### Testing
+Tested the business logic of the application to ensure that the code behaves as expected and that it does not break at any point during its execution.
+Wrote unit tests to check if the rowSpaceMap and continuousSpaceMap get modified correctly during the event of hold and release of tickets.
+### Run the application
+The jar is built and packaged and located in the target folder.
+
+The executable java file is the App.java that creates an instance of the TicketServiceImplementation and facilitates its simulation by interacting with the user.
+### Expected Output
+```
+Enter the number of rows in the venue: 3
+Enter the number of columns in the venue: 4
+
+Press x if you want to stop booking tickets.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 1
+
+Available seats: 12                 //rows*columns
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 2
+
+Number of seats to hold: 3
+Email ID: qwerty
+
+Your hold ID is: 672221262          //3 tickets are being held by user qwerty
+Seats assigned in row: 0            //continuous 3 tickets have been assigned in row 0
+Seat Number: 0
+Seat Number: 1
+Seat Number: 2
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 1
+
+Available seats: 9                  //previous (12) - held (3)
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 2
+
+Number of seats to hold: 5
+Email ID: abcd
+
+Your hold ID is: 1479662593         //5 tickets are being held by user abcd
+Seats assigned in row: 1            //4 continuous tickets are assigned in row1
+Seat Number: 0                      //Max possible allocation in one row is 4 in this venue
+Seat Number: 1
+Seat Number: 2
+Seat Number: 3
+Seats assigned in row: 0            //Allocating the left out person in row 0 seat 3
+Seat Number: 3                      //seat 0, 1 and 2 is being held by user qwerty
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 3
+
+Enter hold ID: 1479662593           //user abcd is confirming his seats
+Enter email: abcd
+
+Your confirmation code is: a2d83e3a-a689-4d68-8d3c-0aa18ba4c8cf
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 1
+
+Available seats: 7                  //previous availability was 9 (12-3) and after that abcd held 5
+Press any letter to proceed.        //so it should effectively be 4 but time has expired on qwerty's hold
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 2
+
+Number of seats to hold: 8          //trying to hold more seats than available
+Email ID: aqws
+
+The requested number of seats is not available.
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? 3
+
+Enter hold ID: 672221262            //qwerty is confirming his hold request
+Enter email: qwerty                 //time has expired and those seats have been added back
+
+The wait time on the tickets that were being held has expired.
+
+Press any letter to proceed.
+
+Menu 
+1. Availability 
+2. Hold Tickets 
+3. Book Tickets
+Your choice (1, 2 or 3)? x
+
+Process finished with exit code 0
+```

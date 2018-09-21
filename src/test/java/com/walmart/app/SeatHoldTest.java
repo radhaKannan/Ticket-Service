@@ -37,6 +37,13 @@ public class SeatHoldTest {
         seatHold.bookOrReleaseTickets(heldTickets, ReserveOrRelease.RESERVE, "mail", null, null, mockedVenue);
     }
 
+    /*
+    Test to check if the tickets are being properly released back into the row space and continuous space maps.
+    Creating the mock data for SeatHold and for both the maps.
+    Row 0 has tickets 0 1 4 5 and tickets 2 and 3 are being released.
+    The method in SeatHold is called and checked if the request is removed from the heldTickets and
+    if the row space map looks like 0: [[0 5]] for row 0 and continuous space map is also checked accordingly.
+     */
     @Test
     public void releaseTickets() throws SessionExpiredException, IllegalAccessException {
         SeatsBlock seatsBlock = new SeatsBlock(0,2,3);

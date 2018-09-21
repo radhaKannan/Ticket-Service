@@ -9,6 +9,13 @@ import java.util.concurrent.TimeUnit;
 
 import static com.walmart.app.Constants.*;
 
+/*
+Implementation of the TicketService interface.
+Maintains three maps to keep track of the seats available in the venue and to check for validity of request.
+rowSpaceMap keeps track of the different continuous space blocks in each row.
+continuousSpaceMap keeps track of the rows corresponding to a continuous space.
+heldTickets keeps track of the hold requests that have been placed.
+ */
 public class TicketServiceImplementation implements TicketService {
     private Venue venue;
     private static TicketServiceImplementation ticketService = null;
@@ -36,9 +43,16 @@ public class TicketServiceImplementation implements TicketService {
         return venue.getNumSeatsAvailable();
     }
 
+    /*
+    If a continuous seat block is available, assign that.
+    Else, keep assigning the maximum seat blocks until the maximum block is greater than seats needed.
+    After that, if still seats needed is not zero, modify the maximum block and assign parts of it.
+    Update the total number of seats available in the venue.
+    Create the SeatHold object, add it to the heldTickets map. Schedule the timer task.
+     */
     @Override
     public synchronized SeatHold findAndHoldSeats(int numSeats, String customerEmail) throws SeatsUnavailableException {
-        if (numSeats < 1 && numSeats > venue.getNumSeatsAvailable())
+        if (numSeats < 1 || numSeats > venue.getNumSeatsAvailable())
             throw new SeatsUnavailableException(SEATS_UNAVAILABLE_MSG);
         List<SeatsBlock> seatBlocks = new ArrayList<>();
         if (continuousSpaceMap.containsKey(numSeats))
@@ -46,10 +60,15 @@ public class TicketServiceImplementation implements TicketService {
         else {
             int seatsNeeded = numSeats;
             int maxContinuous = continuousSpaceMap.lastKey();
-            while (maxContinuous <= seatsNeeded) {
+            while (seatsNeeded != 0 && maxContinuous <= seatsNeeded) {
                 seatBlocks.add(Utilities.assignSeatBlocks(continuousSpaceMap, maxContinuous, rowSpaceMap));
                 seatsNeeded = seatsNeeded - maxContinuous;
-                maxContinuous = continuousSpaceMap.lastKey();
+                if (!continuousSpaceMap.isEmpty()) {
+                    if (continuousSpaceMap.containsKey(seatsNeeded))
+                        maxContinuous = seatsNeeded;
+                    else
+                        maxContinuous = continuousSpaceMap.lastKey();
+                }
             }
             if (seatsNeeded > 0)
                 seatBlocks.add(Utilities.assignRemainingSeatBlock(continuousSpaceMap, seatsNeeded, rowSpaceMap));
@@ -66,6 +85,10 @@ public class TicketServiceImplementation implements TicketService {
         return seatHoldInfo;
     }
 
+    /*
+    Call the method bookOrReleaseTickets, that is synchronized on the seatHold object, so that no two threads book and
+    release the same tickets at the same time. Throws exception if seatHoldId is not present in the heldTickets map.
+     */
     @Override
     public String reserveSeats(int seatHoldId, String customerEmail) throws SessionExpiredException, IllegalAccessException {
         SeatHold ticketsInfo = heldTickets.get(seatHoldId);

@@ -1,5 +1,11 @@
 package com.walmart.app;
 
+/*
+Represents a continuous seatBlock in a row.
+Indicates in which row it is present and
+begins from seatNumber start to seatNumber end (both included).
+In case of 1 seat, start and end would be same.
+ */
 public class SeatsBlock {
     private int row;
     private int start;

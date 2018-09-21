@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.TimerTask;
 import java.util.TreeMap;
 
+/*
+Timer Task to release held tickets in case of time expiry.
+Calls the synchronized method on SeatHold object to avoid clashes with reserving the same tickets at the same time.
+ */
 public class ScheduleTask extends TimerTask {
     private Venue venue;
     private SeatHold seatsInfo;
